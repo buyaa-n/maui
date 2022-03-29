@@ -153,12 +153,11 @@ namespace Microsoft.Maui.Essentials.Implementations
 
 			remoteHostReachability.SetNotification(OnChange);
 			remoteHostReachability.Schedule(CFRunLoop.Main, CFRunLoop.ModeDefault);
-
-#if !(MACCATALYST || MACOS)
 #pragma warning disable BI1234
+#if !(MACCATALYST || MACOS)
 			ConnectivityImplementation.CellularData.RestrictionDidUpdateNotifier = new Action<CTCellularDataRestrictedState>(OnRestrictedStateChanged);
-#pragma warning restore BI1234
 #endif
+#pragma warning restore BI1234
 		}
 
 		internal event Action ReachabilityChanged;

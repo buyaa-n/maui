@@ -3,6 +3,7 @@ using CoreTelephony;
 #endif
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Microsoft.Maui.Essentials.Implementations
 {
@@ -10,11 +11,11 @@ namespace Microsoft.Maui.Essentials.Implementations
 	{
 #if !(MACCATALYST || MACOS)
 		// TODO: Use NWPathMonitor on > iOS 12
-#pragma warning disable BI1234
+#pragma warning disable BI1234, CA1416
 		static readonly Lazy<CTCellularData> cellularData = new Lazy<CTCellularData>(() => new CTCellularData());
 
 		internal static CTCellularData CellularData => cellularData.Value;
-#pragma warning restore BI1234
+#pragma warning restore BI1234, CA1416
 #endif
 
 		static ReachabilityListener listener;
@@ -43,6 +44,7 @@ namespace Microsoft.Maui.Essentials.Implementations
 #if !(MACCATALYST || MACOS)
 				// TODO: Use NWPathMonitor on > iOS 12
 #pragma warning disable BI1234
+				Debug.Assert(!OperatingSystem.IsMacCatalyst());
 				restricted = CellularData.RestrictedState == CTCellularDataRestrictedState.Restricted;
 #pragma warning restore BI1234
 #endif
